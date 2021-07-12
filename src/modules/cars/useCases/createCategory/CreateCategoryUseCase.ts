@@ -1,24 +1,24 @@
-import { ICategoriesRepository } from '../repositories/ICategoriesRepository';
+import { ICategoriesRepository } from '../../repositories/ICategoriesRepository';
 
 interface IRequest {
   name: string;
   description: string;
 }
 
-class CreateCategoryService {
+class CreateCategoryUseCase {
   constructor(private categoriesRepository: ICategoriesRepository) {}
-  // private categoriesRepository: CategoriesRepository;
+  // private categoriesRepository: ICategoriesRepository;
 
-  // constructor(categoriesRepository: CategoriesRepository) {
+  // constructor(categoriesRepository: ICategoriesRepository) {
   //   this.categoriesRepository = categoriesRepository;
   // }
 
-  execute: (data: IRequest) => void = ({ name, description }) => {
+  execute({ name, description }: IRequest): void {
     const categoryFound = this.categoriesRepository.findByName(name);
     if (categoryFound) throw new Error('Category already exists!');
 
     this.categoriesRepository.create({ name, description });
-  };
+  }
 }
 
-export { CreateCategoryService };
+export { CreateCategoryUseCase };
