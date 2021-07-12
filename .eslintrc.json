@@ -32,7 +32,8 @@
     "import/prefer-default-export": "off",
     "no-shadow": "error",
     "no-console": "off",
-    "no-empty-function": "warn",
+    "no-useless-constructor": "off",
+    "no-empty-function": "off",
     "lines-between-class-members": "warn",
     "import/extensions": [
       "error",
