@@ -1,4 +1,4 @@
-# Ignite RentalX
+# Ignite RentX
 Car rental API made with Node.js and TypeScript during Ignite NodeJS
 
 ## 🔨 Features
