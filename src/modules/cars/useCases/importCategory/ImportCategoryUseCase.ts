@@ -23,7 +23,7 @@ class ImportCategoryUseCase {
       stream.pipe(parseFile);
 
       parseFile
-        .on('data', async (line) => {
+        .on('data', async (line: Array<string>) => {
           const [name, description] = line;
           categories.push({
             name,
@@ -47,11 +47,11 @@ class ImportCategoryUseCase {
       const { name, description } = category;
 
       const categoryFound = this.categoriesRepository.findByName(name);
-      if (!categoryFound)
-        this.categoriesRepository.create({
-          name,
-          description,
-        });
+      // if (!categoryFound)
+      //   this.categoriesRepository.create({
+      //     name,
+      //     description,
+      //   });
     });
   }
 }
