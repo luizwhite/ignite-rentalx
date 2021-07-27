@@ -18,22 +18,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "name": { "type": "string" },
-                  "description": { "type": "string" }
-                },
-                "example": {
-                  "name": "Category name sample",
-                  "description": "Category description sample"
-                }
+                "$ref": "#/definitions/Category"
               }
             }
           }
         },
         "responses": {
           "201": { "description": "Created" },
-          "500": { "description": "Category already exists" }
+          "403": { "description": "Category already exists" }
         }
       },
       "get": {
@@ -59,6 +51,76 @@
             }
           }
         }
+      }
+    },
+    "/categories/import": {
+      "post": {
+        "tags": ["Category"],
+        "summary": "Upload a category",
+        "description": "Upload a new category",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/definitions/CategoryImportFile"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Created" },
+          "400": { "description": "Bad Request" }
+        }
+      }
+    },
+    "/specifications": {
+      "post": {
+        "tags": ["Specification"],
+        "summary": "Create a specification",
+        "description": "Create a new specification",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Specification"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Created" },
+          "403": { "description": "Specification already exists" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Specification": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "example": {
+        "name": "Specification name sample",
+        "description": "Specification description sample"
+      }
+    },
+    "Category": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "example": {
+        "name": "Category name sample",
+        "description": "Category description sample"
+      }
+    },
+    "CategoryImportFile": {
+      "type": "object",
+      "properties": {
+        "file": { "type": "string", "format": "binary" }
       }
     }
   }

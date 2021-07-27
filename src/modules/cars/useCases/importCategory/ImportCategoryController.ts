@@ -13,7 +13,7 @@ class ImportCategoryController {
     try {
       await importCategoryUseCase.execute(file);
 
-      return res.send();
+      return res.status(201).send();
     } catch (err) {
       return res.status(400).send({ error: err.message });
     }
