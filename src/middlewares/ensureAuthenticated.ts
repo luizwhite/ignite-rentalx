@@ -6,7 +6,7 @@ import { UsersRepository } from '../modules/accounts/repositories/implementation
 
 export async function ensureAuthenticated(
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ): Promise<void | Response> {
   const authHeader = req.headers.authorization;
@@ -23,6 +23,8 @@ export async function ensureAuthenticated(
 
   if (!userFound)
     throw new AppError('User does not exist! Invalid token!', 401);
+
+  req.user = { id: user_id as string };
 
   return next();
 }

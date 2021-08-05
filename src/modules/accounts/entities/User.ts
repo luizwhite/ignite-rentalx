@@ -28,6 +28,9 @@ class User {
   @Column('boolean')
   isAdmin = false;
 
+  @Column({ nullable: true, type: 'varchar' })
+  avatar: string | null = null;
+
   @CreateDateColumn()
   created_at!: Date;
 }
