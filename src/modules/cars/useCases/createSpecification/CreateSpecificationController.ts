@@ -11,13 +11,9 @@ class CreateSpecificationController {
       CreateSpecificationUseCase
     );
 
-    try {
-      await createSpecificationUseCase.execute({ name, description });
+    await createSpecificationUseCase.execute({ name, description });
 
-      return res.status(201).send();
-    } catch (err) {
-      return res.status(403).send({ error: err.message });
-    }
+    return res.status(201).send();
   }
 }
 

@@ -10,13 +10,9 @@ class ImportCategoryController {
 
     const importCategoryUseCase = container.resolve(ImportCategoryUseCase);
 
-    try {
-      await importCategoryUseCase.execute(file);
+    await importCategoryUseCase.execute(file);
 
-      return res.status(201).send();
-    } catch (err) {
-      return res.status(400).send({ error: err.message });
-    }
+    return res.status(201).send();
   }
 }
 

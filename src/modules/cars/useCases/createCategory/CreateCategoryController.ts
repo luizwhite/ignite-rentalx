@@ -9,13 +9,9 @@ class CreateCategoryController {
 
     const createCategoryUseCase = container.resolve(CreateCategoryUseCase);
 
-    try {
-      await createCategoryUseCase.execute({ name, description });
+    await createCategoryUseCase.execute({ name, description });
 
-      return res.status(201).send();
-    } catch (err) {
-      return res.status(403).send({ error: err.message });
-    }
+    return res.status(201).send();
   }
 }
 export { CreateCategoryController };

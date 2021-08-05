@@ -4,25 +4,16 @@ import { v4 as uuidv4 } from 'uuid';
 @Entity('categories')
 class Category {
   @PrimaryColumn()
-  id?: string;
+  id: string = uuidv4();
 
   @Column()
-  name: string;
+  name!: string;
 
   @Column()
-  description: string;
+  description!: string;
 
   @CreateDateColumn()
-  created_at?: Date;
-
-  constructor() {
-    if (!this.id) {
-      this.id = uuidv4();
-    }
-
-    this.name = '';
-    this.description = '';
-  }
+  created_at!: Date;
 }
 
 export { Category };
