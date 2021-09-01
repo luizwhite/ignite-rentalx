@@ -1,5 +1,6 @@
-import { AppError } from '../../../../errors/AppError';
-import { FakeCategoriesRepository } from '../../repositories/fakes/FakeCategoriesRepository';
+import { AppError } from '@errors/AppError';
+import { FakeCategoriesRepository } from '@modules/cars/repositories/fakes/FakeCategoriesRepository';
+
 import { CreateCategoryUseCase } from './CreateCategoryUseCase';
 
 let createCategoryUseCase: CreateCategoryUseCase;
