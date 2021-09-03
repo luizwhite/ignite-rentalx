@@ -1,8 +1,8 @@
 import { AppError } from '@errors/AppError';
 import { ICreateUserDTO } from '@modules/accounts/dtos/ICreateUserDTO';
 import { FakeUsersRepository } from '@modules/accounts/repositories/fakes/FakeUsersRepository';
+import { CreateUserUseCase } from '@modules/accounts/useCases/createUser/CreateUserUseCase';
 
-import { CreateUserUseCase } from '../createUser/CreateUserUseCase';
 import { AuthenticateUserUseCase } from './AuthenticateUserUseCase';
 
 let fakeUsersRepository: FakeUsersRepository;
