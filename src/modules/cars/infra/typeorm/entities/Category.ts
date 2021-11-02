@@ -13,7 +13,7 @@ class Category {
   description!: string;
 
   @CreateDateColumn()
-  created_at!: Date;
+  created_at?: Date = new Date();
 }
 
 export { Category };

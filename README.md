@@ -1,26 +1,54 @@
 # Ignite RentX
 Car rental API made with Node.js and TypeScript during Ignite NodeJS
 
+## 🚀 Techs & Tools
+→ [**Docker**](https://docs.docker.com/)
+
+→ [**Node.js**](https://nodejs.org)
+
+→ [**TypeScript**](https://www.typescriptlang.org/)
+
+→ [**Swagger UI**](https://swagger.io/tools/swagger-ui/)
+
+→ [**Jest**](https://jestjs.io/docs/getting-started)
+
 ## 🔨 Features
 → **Car Registration**
 
+→ **Car Update**
+
 → **Car Listing**
+
+→ **Car Image Registration**
+
+→ **Car Rental Registration**
+
+→ **Car Category Registration**
 
 → **Car Spec Registration**
-
-→ **Car Listing**
 
 ## 🔌️ Requirement Analysis
 ### Car Registration
 **RF**
 - should be able to register a new car.
-- should be able to list all car specs.
+- should be able to list all the created car specs.
   
 **RN**
 - should not be able to register a car with an existent license place.
-- should not be able to change a car's license plate.
+- should be able to register a car available by default.
 - should not be able to register a new car in case the user is not an administrator.
-- new cars should be always available.
+
+### Car Update
+**RF**
+- should be able to update car information.
+- should be able to include/exclude one or more car specs.
+- should be able to list all the updated car specs.
+
+**RN**
+- should not be able to update a car with an unregistered car id.
+- should not be able to include a new car spec when duplicate.
+- should not be able to change a car's license plate.
+- should not be able to register a new car spec in case the user is not an administrator.
 
 ### Car Listing
 **RF**
@@ -32,20 +60,10 @@ Car rental API made with Node.js and TypeScript during Ignite NodeJS
 **RN**
 - should be able to list cars even for an unlogged in user.
 
-### Car Spec Registration
-**RF**
-- should be able to register a new car spec.
-- should be able to list all car specs.
-- should be able to list all car specs cars.
-
-**RN**
-- should not be able to register a new car spec relative to a unregistered car.
-- should not be able to register an existing car spec in this car spec list.
-- should not be able to register a new car spec in case the user is not an administrator.
-
 ### Car Image Registration
 **RF**
 - should be able to register a new car image.
+- *should be able to list all image cars.
 
 **RNF**
 - use multer to upload files.
@@ -61,16 +79,25 @@ Car rental API made with Node.js and TypeScript during Ignite NodeJS
 **RN**
 - should not be able to register a new car rental to a user with an active car rental.
 - should not be able to register a new car rental for an already rented car.
-- a car rent should have a maximum duration of 24 hours.
+- should not be able to rent a car expecting to return it before 24 hours of rental.
+- should not be able to register a new car rental in case the user is not an administrator.
 
-## 🚀 Techs & Tools
-→ [**Docker**](https://docs.docker.com/)
+### Car Category Registration
+**RF**
+- should be able to create a new category.
 
-→ [**Node.js**](https://nodejs.org)
+**RN**
+- should not be able to create a new category with a name that already exists.
 
-→ [**TypeScript**](https://www.typescriptlang.org/)
+### Car Category Listing
+**RF**
+- should be able to list all categories.
 
-→ [**Swagger UI**](https://swagger.io/tools/swagger-ui/)
+### Car Specification Registration
+**RF**
+- should be able to create a new specification.
 
+**RN**
+- should not be able to create a new specification with a name that already exists.
 
 ## 💻 Local Setup

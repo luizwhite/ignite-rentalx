@@ -12,9 +12,6 @@ const tsConfigString = fs.readFileSync('./tsconfig.json', 'utf8');
 const tsConfigParsed = JSON.parse(stripJsonComments(tsConfigString));
 const { compilerOptions } = tsConfigParsed;
 
-console.log(tsConfigParsed);
-
-
 export default {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
