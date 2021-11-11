@@ -160,7 +160,7 @@ describe('Update Car', () => {
   });
 
   it('should not be able to update a car with an unregistered car id.', async () => {
-    expect(async () => {
+    await expect(async () => {
       await updateCarUseCase.execute({
         id: 'unregistered_car_id',
         specifications: specifications_ids,

@@ -39,7 +39,7 @@ describe('Create category', () => {
 
     await createCategoryUseCase.execute(category);
 
-    expect(async () => {
+    await expect(async () => {
       await createCategoryUseCase.execute(categoryNew);
     }).rejects.toBeInstanceOf(AppError);
   });

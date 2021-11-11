@@ -39,7 +39,7 @@ describe('Create Car', () => {
       name: 'Car 1',
     });
 
-    expect(async () => {
+    await expect(async () => {
       await createCarUseCase.execute({
         ...carData,
         name: 'Car 2',

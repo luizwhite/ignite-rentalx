@@ -2,6 +2,8 @@ import createConnection from '@shared/infra/typeorm';
 
 import { app } from './app';
 
-createConnection();
+(async () => {
+  await createConnection();
 
-app.listen(3333, () => console.log('Server is running!'));
+  app.listen(3333, () => console.log('Server is running!'));
+})();

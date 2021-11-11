@@ -59,7 +59,7 @@ describe('Create Rental', () => {
       expected_return_date,
     });
 
-    expect(async () => {
+    await expect(async () => {
       await createRentalUseCase.execute({
         user_id,
         car_id: uuidv4(),
@@ -75,7 +75,7 @@ describe('Create Rental', () => {
       expected_return_date,
     });
 
-    expect(async () => {
+    await expect(async () => {
       await createRentalUseCase.execute({
         user_id: uuidv4(),
         car_id,
@@ -90,7 +90,7 @@ describe('Create Rental', () => {
     d.setHours(d.getHours() + 23, d.getMinutes());
     const earlyReturnDate = d;
 
-    expect(async () => {
+    await expect(async () => {
       await createRentalUseCase.execute({
         user_id,
         car_id,
