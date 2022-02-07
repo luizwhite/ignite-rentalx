@@ -1,5 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
+import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository';
 import { ICreateRentalDTO } from '@modules/rentals/dtos/ICreateRentalDTO';
 import { Rental } from '@modules/rentals/infra/typeorm/entities/Rental';
 import { IRentalsRepository } from '@modules/rentals/repositories/IRentalsRepository';
@@ -9,7 +10,9 @@ import { AppError } from '@shared/errors/AppError';
 class CreateRentalUseCase {
   constructor(
     @inject('RentalsRepository')
-    private rentalsRepository: IRentalsRepository
+    private rentalsRepository: IRentalsRepository,
+    @inject('CarsRepository')
+    private carsRepository: ICarsRepository
   ) {}
 
   async execute(data: ICreateRentalDTO): Promise<Rental> {
@@ -30,6 +33,7 @@ class CreateRentalUseCase {
 
     const dateNow = new Date();
     dateNow.setSeconds(0, 0);
+    expected_return_date.setSeconds(0, 0);
     const dateDiffInHours =
       Math.abs(+dateNow - +expected_return_date) / (60 * 60 * 1000);
 
@@ -38,7 +42,12 @@ class CreateRentalUseCase {
         'Minimum expected return date is 24 hours from rental!'
       );
 
-    const rental = await this.rentalsRepository.create(data);
+    const rental = await this.rentalsRepository.save({
+      ...data,
+      expected_return_date,
+    });
+    await this.carsRepository.update({ id: car_id, available: false });
+
     return rental;
   }
 }

@@ -27,6 +27,10 @@ Car rental API made with Node.js and TypeScript during Ignite NodeJS
 
 → **Car Spec Registration**
 
+→ **Car Return**
+
+→ **Car Rent History**
+
 ## 🔌️ Requirement Analysis
 ### Car Registration
 **RF**
@@ -77,10 +81,10 @@ Car rental API made with Node.js and TypeScript during Ignite NodeJS
 - should be able to register a new car rental.
 
 **RN**
+- should be able to change the car availability when it is rented.
 - should not be able to register a new car rental to a user with an active car rental.
 - should not be able to register a new car rental for an already rented car.
 - should not be able to rent a car expecting to return it before 24 hours of rental.
-- should not be able to register a new car rental in case the user is not an administrator.
 
 ### Car Category Registration
 **RF**
@@ -88,6 +92,7 @@ Car rental API made with Node.js and TypeScript during Ignite NodeJS
 
 **RN**
 - should not be able to create a new category with a name that already exists.
+- should not be able to create a new category in case the user is not an administrator.
 
 ### Car Category Listing
 **RF**
@@ -99,5 +104,24 @@ Car rental API made with Node.js and TypeScript during Ignite NodeJS
 
 **RN**
 - should not be able to create a new specification with a name that already exists.
+
+### Car Return
+**RF**
+- should be able to make a car return.
+
+**RN**
+- should be able to charge daily rate if returned with less than 24 hours.
+- should be able to release the car when it is returned.
+- should be able to release a user when the user returns a car.
+- should be able to calculate the total rental amount when a car is returned.
+- should be able to charge an additional rent amount if the return is late, based on the time delayed.
+- should be able to add rental penalties to the total rental amount.
+
+### Car Rent History
+**RF**
+- should be able to list all user rents.
+
+**RN**
+- should not be able to list rents if the user is not logged in.
 
 ## 💻 Local Setup

@@ -18,6 +18,7 @@ class CreateCarUseCase {
     const carFound = await this.carsRepository.findByLicensePlate(
       license_plate
     );
+
     if (carFound)
       throw new AppError('Car with the given license plate already exists!');
 

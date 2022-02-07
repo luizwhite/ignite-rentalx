@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
+import { AppError } from '@shared/errors/AppError';
+
 import { UploadCarImageUseCase } from './UploadCarImagesUseCase';
 
 class UploadCarImagesController {
@@ -8,8 +10,9 @@ class UploadCarImagesController {
     const { id } = req.params;
     const images = req.files as Express.Multer.File[] | undefined;
 
-    if (!id || !images)
-      return res.status(400).json({ error: 'file required!' });
+    if (!id || !images) {
+      throw new AppError('File required!');
+    }
 
     const uploadCarImagesUseCase = container.resolve(UploadCarImageUseCase);
 

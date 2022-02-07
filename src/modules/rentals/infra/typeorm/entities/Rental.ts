@@ -18,7 +18,15 @@ class Rental {
   id: string = uuidv4();
 
   @Column()
-  start_date!: Date;
+  start_date: Date = new Date(
+    new Date().getFullYear(),
+    new Date().getMonth(),
+    new Date().getDate(),
+    new Date().getHours(),
+    new Date().getMinutes(),
+    0,
+    0
+  );
 
   @Column({ nullable: true, type: 'timestamp' })
   end_date: Date | null = null;

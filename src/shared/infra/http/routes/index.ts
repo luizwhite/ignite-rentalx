@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { authRoutes } from './auth.routes';
 import { carsRoutes } from './cars.routes';
 import { categoriesRoutes } from './categories.routes';
-import { rentalRoutes } from './rental.routes';
+import { rentalRoutes } from './rentals.routes';
 import { specificationsRoutes } from './specifications.routes';
 import { usersRoutes } from './users.routes';
 

@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
+import { FakeCarsRepository } from '@modules/cars/repositories/fakes/FakeCarsRepository';
 import { Rental } from '@modules/rentals/infra/typeorm/entities/Rental';
 import { FakeRentalsRepository } from '@modules/rentals/repositories/fakes/FakeRentalsRepository';
 import { AppError } from '@shared/errors/AppError';
@@ -8,6 +9,7 @@ import { CreateRentalUseCase } from './CreateRentalUseCase';
 
 let createRentalUseCase: CreateRentalUseCase;
 let fakeRentalsRepository: FakeRentalsRepository;
+let fakeCarsRepository: FakeCarsRepository;
 
 let user_id: string;
 let car_id: string;
@@ -17,7 +19,6 @@ let expected_return_date: Date;
 describe('Create Rental', () => {
   beforeAll(() => {
     user_id = uuidv4();
-    car_id = uuidv4();
 
     uuidv4Regex = new RegExp(
       /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/,
@@ -30,9 +31,25 @@ describe('Create Rental', () => {
     expected_return_date = d;
   });
 
-  beforeEach(() => {
+  beforeEach(async () => {
     fakeRentalsRepository = new FakeRentalsRepository();
-    createRentalUseCase = new CreateRentalUseCase(fakeRentalsRepository);
+    fakeCarsRepository = new FakeCarsRepository();
+    createRentalUseCase = new CreateRentalUseCase(
+      fakeRentalsRepository,
+      fakeCarsRepository
+    );
+
+    const { id } = await fakeCarsRepository.create({
+      name: 'Palio',
+      description: 'Carro básico',
+      daily_rate: 50.0,
+      license_plate: 'POI-8251',
+      fine_amount: 30,
+      brand: 'Fiat',
+      category_id: 'f557c2c6-84d1-4aef-979f-c99473885d3b',
+    });
+
+    car_id = id;
   });
 
   it('should be able to register a new car rental', async () => {
@@ -42,6 +59,8 @@ describe('Create Rental', () => {
       expected_return_date,
     });
 
+    const rentedCar = await fakeCarsRepository.findById(car_id);
+
     expect(rentalCreated).toBeInstanceOf(Rental);
     expect(rentalCreated).toEqual(
       expect.objectContaining({
@@ -50,6 +69,8 @@ describe('Create Rental', () => {
         id: expect.stringMatching(uuidv4Regex),
       })
     );
+    expect(rentedCar).toBeTruthy();
+    expect(rentedCar!.available).toBeFalsy();
   });
 
   it('should not be able to register a new car rental to a user with an active car rental', async () => {

@@ -42,9 +42,10 @@ class FakeCarsRepository implements ICarsRepository {
     const carUpdatedData: CarUpdatedDataType = (({
       name,
       description,
+      available,
       daily_rate,
       fine_amount,
-    }) => ({ name, description, daily_rate, fine_amount }))(data);
+    }) => ({ name, description, available, daily_rate, fine_amount }))(data);
     (Object.keys(carUpdatedData) as (keyof CarUpdatedDataType)[]).forEach(
       (key) => carUpdatedData[key] === undefined && delete carUpdatedData[key]
     );

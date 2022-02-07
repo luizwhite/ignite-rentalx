@@ -14,6 +14,11 @@
         "tags": ["Category"],
         "summary": "Create a category",
         "description": "Create a new category",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -58,6 +63,11 @@
         "tags": ["Category"],
         "summary": "Upload a category",
         "description": "Upload a new category",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "multipart/form-data": {
@@ -78,6 +88,11 @@
         "tags": ["Specification"],
         "summary": "Create a specification",
         "description": "Create a new specification",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -90,6 +105,122 @@
         "responses": {
           "201": { "description": "Created" },
           "403": { "description": "Specification already exists" }
+        }
+      }
+    },
+    "/sessions": {
+      "post": {
+        "tags": ["Session"],
+        "summary": "User Authentication",
+        "description": "Authenticate a user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Session"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authentication Success",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/definitions/SessionResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Authentication",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/definitions/AppErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars": {
+      "post": {
+        "tags": ["Cars"],
+        "summary": "Create a car",
+        "description": "Create a new car",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Car"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/CarAllData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Car with the given license plate already exists",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/definitions/AppErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/images/{id}": {
+      "post": {
+        "tags": ["Cars"],
+        "summary": "Upload Images",
+        "description": "Upload new car images",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Car ID",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/definitions/CarImages"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Created" },
+          "400": {
+            "description": "At least one image file is required",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/definitions/AppErrorResponse" }
+              }
+            }
+          }
         }
       }
     }
@@ -121,6 +252,111 @@
       "type": "object",
       "properties": {
         "file": { "type": "string", "format": "binary" }
+      }
+    },
+    "Session": {
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "password": { "type": "string" }
+      },
+      "example": {
+        "email": "Session email sample",
+        "password": "Session password sample"
+      }
+    },
+    "Car": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "daily_rate": { "type": "number" },
+        "license_plate": { "type": "string" },
+        "fine_amount": { "type": "number" },
+        "brand": { "type": "string" },
+        "category_id": { "type": "string" },
+        "specifications": { "type": "array", "items": { "type": "string" } }
+      },
+      "example": {
+        "name": "Car name sample",
+        "description": "Car description sample",
+        "daily_rate": 100.0,
+        "license_plate": "ABC-8080",
+        "fine_amount": 50.0,
+        "brand": "Car-brand-sample",
+        "category_id": "car-category-id-sample",
+        "specifications": [
+          "Car-specification-id-sample-01",
+          "Car-specification-id-sample-02",
+          "Car-specification-id-sample-03"
+        ]
+      }
+    },
+    "CarImages": {
+      "type": "object",
+      "properties": {
+        "images": {
+          "type": "array",
+          "items": { "type": "string", "format": "binary" }
+        }
+      }
+    },
+    "CarAllData": {
+      "allOf": [
+        { "$ref": "#/definitions/Car" },
+        {
+          "type": "object",
+          "properties": {
+            "id": { "type": "string" },
+            "available": { "type": "boolean" },
+            "created_at": { "type": "datetime" }
+          },
+          "example": {
+            "id": "car-sample-id",
+            "available": true,
+            "created_at": "2022-01-10T15:00:00"
+          }
+        }
+      ]
+    },
+    "SessionResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "email": { "type": "string" }
+          }
+        },
+        "token": { "type": "string" }
+      },
+      "example": {
+        "user": {
+          "name": "User name sample",
+          "email": "User email sample"
+        },
+        "token": "session-token-sample"
+      }
+    },
+    "AppErrorResponse": {
+      "type": "object",
+      "properties": {
+        "error": { "type": "string" },
+        "message": { "type": "string" }
+      },
+      "example": {
+        "error": "Error name sample",
+        "message": "Error message sample"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }

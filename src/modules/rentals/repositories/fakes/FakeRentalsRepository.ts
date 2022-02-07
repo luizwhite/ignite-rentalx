@@ -6,15 +6,29 @@ import { IRentalsRepository } from '../IRentalsRepository';
 class FakeRentalsRepository implements IRentalsRepository {
   rentals: Rental[] = [];
 
-  async create(data: ICreateRentalDTO): Promise<Rental> {
-    const rental = new Rental();
+  async save(data: ICreateRentalDTO): Promise<Rental> {
+    const { id, end_date, ...dataToCreate } = data;
 
-    const additionalData = { start_date: new Date() };
-    Object.assign(rental, { ...data, ...additionalData });
+    if (id) {
+      const rentalUpdated = this.rentals.find((rental) => rental.id === id)!;
 
-    this.rentals.push(rental);
+      const dataToUpdate = { ...dataToCreate, end_date };
 
-    return this.rentals.find((r) => r === rental)!;
+      Object.assign(rentalUpdated, dataToUpdate);
+
+      const rentalIndex = this.rentals.indexOf(rentalUpdated);
+      this.rentals.splice(rentalIndex, 1, rentalUpdated);
+
+      return this.rentals[rentalIndex];
+    }
+
+    const rentalCreated = new Rental();
+
+    Object.assign(rentalCreated, dataToCreate);
+
+    this.rentals.push(rentalCreated);
+
+    return this.rentals[this.rentals.indexOf(rentalCreated)];
   }
 
   async findOpenRentalByCar(car_id: string): Promise<Rental | null> {
@@ -31,6 +45,20 @@ class FakeRentalsRepository implements IRentalsRepository {
         (rental) => rental.user_id === user_id && !rental.end_date
       ) || null
     );
+  }
+
+  async findById(id: string): Promise<Rental | null> {
+    const rentalFound = this.rentals.find((rental) => rental.id === id);
+
+    return rentalFound || null;
+  }
+
+  async findByUser(user_id: string): Promise<Rental[]> {
+    const rentalsFound = this.rentals.filter(
+      (rental) => rental.user_id === user_id
+    );
+
+    return rentalsFound;
   }
 }
 

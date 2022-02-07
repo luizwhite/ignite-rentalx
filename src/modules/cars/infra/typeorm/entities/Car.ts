@@ -11,6 +11,8 @@ import {
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
+import { ColumnNumericTransformer } from '@shared/infra/typeorm/transformers/ColumnNumericTransformer';
+
 import { Category } from './Category';
 import { Specification } from './Specification';
 
@@ -26,7 +28,11 @@ class Car {
   @Column()
   description!: string;
 
-  @Column()
+  @Column('numeric', {
+    precision: 7,
+    scale: 2,
+    transformer: new ColumnNumericTransformer(),
+  })
   daily_rate!: number;
 
   @Column('boolean')
@@ -35,7 +41,11 @@ class Car {
   @Column()
   license_plate!: string;
 
-  @Column()
+  @Column('numeric', {
+    // precision: 7, // only works for decimal type columns
+    // scale: 2,
+    transformer: new ColumnNumericTransformer(),
+  })
   fine_amount!: number;
 
   @Column()
