@@ -18,15 +18,7 @@ class Rental {
   id: string = uuidv4();
 
   @Column()
-  start_date: Date = new Date(
-    new Date().getFullYear(),
-    new Date().getMonth(),
-    new Date().getDate(),
-    new Date().getHours(),
-    new Date().getMinutes(),
-    0,
-    0
-  );
+  start_date?: Date;
 
   @Column({ nullable: true, type: 'timestamp' })
   end_date: Date | null = null;
@@ -56,6 +48,15 @@ class Rental {
 
   @UpdateDateColumn()
   updated_at?: Date = new Date();
+
+  constructor() {
+    if (!this.start_date) {
+      const d = new Date();
+      d.setSeconds(0, 0);
+
+      this.start_date = d;
+    }
+  }
 }
 
 export { Rental };
