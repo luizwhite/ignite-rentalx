@@ -9,12 +9,16 @@ const mailTemplateProviders = {
   handlebars: HandlebarsMailTemplateProvider,
 };
 
+const mailProviders = {
+  ethereal: EtherealMailProvider,
+};
+
 container.registerSingleton<IMailTemplateProvider>(
   'MailTemplateProvider',
   mailTemplateProviders.handlebars
 );
 
 container.registerInstance<IMailProvider>(
-  'EtherealMailProvider',
-  container.resolve<IMailProvider>(EtherealMailProvider)
+  'MailProvider',
+  container.resolve<IMailProvider>(mailProviders.ethereal)
 );

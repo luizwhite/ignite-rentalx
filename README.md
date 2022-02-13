@@ -128,14 +128,16 @@ Car rental API made with Node.js and TypeScript during Ignite NodeJS
 
 ### Password Recovery
 **RF**
-- should be able to a user recover his/her password informing the e-mail.
-- should be able to receive an e-mail with password recovery instructions.
+- should be able to a user reset his/her password informing his/her e-mail.
 
 **RNF**
 - password recovery link expires in 3 hours
 
 **RN**
-- should be able to save a new password.
+- should be able to send an e-mail with password recovery instructions.
+- should not be able to send a password recovery e-mail to a non-existing user.
+- should be able to generate a forgotten password refresh token.
+- should be able to reset user password with the new password informed.
 - should not be able to use an expired recovery password e-mail link.
 
 ## 💻 Local Setup

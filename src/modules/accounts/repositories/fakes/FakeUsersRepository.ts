@@ -28,15 +28,23 @@ class FakeUsersRepository implements IUsersRepository {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const user = this.users.find(({ email: uEmail }) => uEmail === email);
+    const userFound = this.users.find((user) => user.email === email);
 
-    return user || null;
+    return userFound || null;
   }
 
   async findById(id: string): Promise<User | null> {
-    const user = this.users.find(({ id: uId }) => uId === id);
+    const userFound = this.users.find((user) => user.id === id);
 
-    return user || null;
+    return userFound || null;
+  }
+
+  async updatePassword(id: string, password: string): Promise<void> {
+    const userFound = this.users.find((user) => user.id === id);
+
+    if (!userFound) return;
+
+    this.users[this.users.indexOf(userFound)].password = password;
   }
 }
 

@@ -1,11 +1,13 @@
 import { AppError } from '@errors/AppError';
 import { ICreateUserDTO } from '@modules/accounts/dtos/ICreateUserDTO';
 import { FakeUsersRepository } from '@modules/accounts/repositories/fakes/FakeUsersRepository';
+import { FakeUserTokensRepository } from '@modules/accounts/repositories/fakes/FakeUserTokensRepository';
 import { CreateUserUseCase } from '@modules/accounts/useCases/createUser/CreateUserUseCase';
 
 import { AuthenticateUserUseCase } from './AuthenticateUserUseCase';
 
 let fakeUsersRepository: FakeUsersRepository;
+let fakeUserTokensRepository: FakeUserTokensRepository;
 let authenticateUserUseCase: AuthenticateUserUseCase;
 let createUserUseCase: CreateUserUseCase;
 
@@ -15,7 +17,12 @@ describe('Authenticate User', () => {
 
   beforeEach(async () => {
     fakeUsersRepository = new FakeUsersRepository();
-    authenticateUserUseCase = new AuthenticateUserUseCase(fakeUsersRepository);
+    fakeUserTokensRepository = new FakeUserTokensRepository();
+
+    authenticateUserUseCase = new AuthenticateUserUseCase(
+      fakeUsersRepository,
+      fakeUserTokensRepository
+    );
     createUserUseCase = new CreateUserUseCase(fakeUsersRepository);
 
     const user: ICreateUserDTO = {
