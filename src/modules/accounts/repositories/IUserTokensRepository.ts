@@ -7,6 +7,7 @@ interface IUserTokensRepository {
     user_id: string,
     refresh_token: string
   ): Promise<UserToken | null>;
+  findByRefreshToken(refresh_token: string): Promise<UserToken | null>;
   deleteById(id: string): Promise<void>;
 }
 

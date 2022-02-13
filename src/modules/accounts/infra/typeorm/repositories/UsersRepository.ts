@@ -33,12 +33,21 @@ class UsersRepository implements IUsersRepository {
 
   async findByEmail(email: string): Promise<User | null> {
     const userFound = await this.repository.findOne({ email });
+
     return userFound || null;
   }
 
   async findById(id: string): Promise<User | null> {
     const userFound = await this.repository.findOne(id);
+
     return userFound || null;
+  }
+
+  async updatePassword(id: string, password: string): Promise<void> {
+    await this.repository.save({
+      id,
+      password,
+    });
   }
 }
 

@@ -31,6 +31,8 @@ Car rental API made with Node.js and TypeScript during Ignite NodeJS
 
 → **Car Rent History**
 
+→ **Password Recovery**
+
 ## 🔌️ Requirement Analysis
 ### Car Registration
 **RF**
@@ -123,5 +125,17 @@ Car rental API made with Node.js and TypeScript during Ignite NodeJS
 
 **RN**
 - should not be able to list rents if the user is not logged in.
+
+### Password Recovery
+**RF**
+- should be able to a user recover his/her password informing the e-mail.
+- should be able to receive an e-mail with password recovery instructions.
+
+**RNF**
+- password recovery link expires in 3 hours
+
+**RN**
+- should be able to save a new password.
+- should not be able to use an expired recovery password e-mail link.
 
 ## 💻 Local Setup
