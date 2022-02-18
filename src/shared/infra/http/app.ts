@@ -4,6 +4,7 @@ import { JsonWebTokenError } from 'jsonwebtoken';
 import swaggerUI from 'swagger-ui-express';
 
 import 'reflect-metadata';
+import 'dotenv/config';
 import '@shared/container';
 
 import { AppError } from '@errors/AppError';

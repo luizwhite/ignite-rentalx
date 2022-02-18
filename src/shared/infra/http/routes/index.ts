@@ -1,4 +1,6 @@
-import { Router } from 'express';
+import express, { Router } from 'express';
+
+import uploadConfig from '@config/upload';
 
 import { authRoutes } from './auth.routes';
 import { carsRoutes } from './cars.routes';
@@ -17,5 +19,17 @@ router.use('/cars', carsRoutes);
 router.use('/rentals', rentalRoutes);
 router.use('/password', passwordsRoutes);
 router.use('/', authRoutes);
+
+router.use(
+  `/files/${uploadConfig.avatarFolderName}`,
+  express.static(
+    `${uploadConfig.uploadsFolder}/${uploadConfig.avatarFolderName}`
+  )
+);
+
+router.use(
+  `/files/${uploadConfig.carsFolderName}`,
+  express.static(`${uploadConfig.uploadsFolder}/${uploadConfig.carsFolderName}`)
+);
 
 export { router };

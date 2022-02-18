@@ -46,6 +46,14 @@ class FakeUsersRepository implements IUsersRepository {
 
     this.users[this.users.indexOf(userFound)].password = password;
   }
+
+  async updateAvatar(id: string, avatar: string): Promise<void> {
+    const userFound = this.users.find((user) => user.id === id);
+
+    if (!userFound) return;
+
+    this.users[this.users.indexOf(userFound)].avatar = avatar;
+  }
 }
 
 export { FakeUsersRepository };

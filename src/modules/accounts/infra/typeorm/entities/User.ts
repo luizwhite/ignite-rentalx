@@ -1,3 +1,4 @@
+import { Expose } from 'class-transformer';
 import {
   Entity,
   Column,
@@ -6,6 +7,8 @@ import {
   Unique,
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
+
+import uploadConfig from '@config/upload';
 
 @Entity('users')
 @Unique('UQ_UsersUniques', ['email'])
@@ -30,6 +33,22 @@ class User {
 
   @Column({ nullable: true, type: 'varchar' })
   avatar: string | null = null;
+
+  @Expose({ name: 'avatar_url' })
+  getAvatarUrl(): string | null {
+    if (!this.avatar) return null;
+
+    switch (uploadConfig.driver) {
+      case 'disk':
+        return `${process.env.API_URL}/files/${uploadConfig.avatarFolderName}/${this.avatar}`;
+      case 'amazonS3':
+        return `https://${uploadConfig.config.amazonS3.bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${uploadConfig.avatarFolderName}/${this.avatar}`;
+      default:
+        return null;
+    }
+  }
+
+  avatar_url!: string;
 
   @CreateDateColumn()
   created_at!: Date;

@@ -49,6 +49,13 @@ class UsersRepository implements IUsersRepository {
       password,
     });
   }
+
+  async updateAvatar(id: string, avatar: string): Promise<void> {
+    await this.repository.save({
+      id,
+      avatar,
+    });
+  }
 }
 
 export { UsersRepository };
