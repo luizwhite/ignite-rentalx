@@ -14,6 +14,8 @@ const createConnection: createConnectionPostgres = createConnectionBase;
 
 export default async (host = 'database'): Promise<Connection> => {
   const defaultOptions = await getConnectionOptions();
+  console.log({ defaultOptions });
+
   const newOptions = {
     ...defaultOptions,
     host: process.env.NODE_ENV !== 'test' ? host : 'localhost',

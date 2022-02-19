@@ -6,4 +6,4 @@ import { app } from './app';
   await createConnection();
 
   app.listen(3333, () => console.log('Server is running!'));
-})();
+})().catch((err) => console.log(err));

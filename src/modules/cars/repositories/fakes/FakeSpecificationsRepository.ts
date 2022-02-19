@@ -15,11 +15,13 @@ class FakeSpecificationsRepository implements ISpecificationsRepository {
 
     this.specifications.push(specification);
 
-    return this.specifications.find((s) => s === specification)!;
+    return this.specifications[this.specifications.indexOf(specification)];
   }
 
   async findByName(name: string): Promise<Specification | null> {
-    throw new Error('Method not implemented.');
+    const specFound = this.specifications.find((spec) => spec.name === name);
+
+    return specFound || null;
   }
 
   async findById(spec_id: string): Promise<Specification | null> {

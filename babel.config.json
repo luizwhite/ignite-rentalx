@@ -1,0 +1,37 @@
+{
+  "assumptions": { "setPublicClassFields": true },
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "@modules": "./src/modules",
+          "@config": "./src/config",
+          "@shared": "./src/shared",
+          "@utils": "./src/utils",
+          "@errors": "./src/shared/errors",
+          "@middlewares": "./src/shared/infra/http/middlewares",
+          "@routes": "./src/shared/infra/http/routes"
+        }
+      }
+    ],
+    "transform-typescript-metadata",
+    ["@babel/plugin-proposal-decorators", { "version": "legacy" }],
+    "@babel/plugin-proposal-class-properties"
+  ],
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current"
+        },
+        "bugfixes": true,
+        "useBuiltIns": "usage",
+        "corejs": "3.21.1",
+        "shippedProposals": true
+      }
+    ],
+    "@babel/preset-typescript"
+  ]
+}
