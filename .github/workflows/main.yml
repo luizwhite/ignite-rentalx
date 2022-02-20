@@ -13,11 +13,13 @@ on:
 
 env:
   API_URL: "http://localhost:3333"
+  API_PATH: "/home/app/app/api-rentx"
   FORGOT_MAIL_URL: "http://localhost:3333/password/reset?token="
   STORAGE_DRIVER: amazonS3
   MAIL_DRIVER: amazonSES
   AWS_REGION: sa-east-1
   AWS_S3_BUCKET_NAME: api-myown-rentx
+  PM2_SERVICE_NAME: rentx_api
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -66,7 +68,6 @@ jobs:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2.1.0
         with:
-          # Artifact name
           name: artifact
       
       - name: Create ENV File
@@ -99,17 +100,6 @@ jobs:
           name: "ormconfig.migrations.json"
           json: ${{ secrets.PSQL_MIGRATIONS_CONFIG_JSON }}
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v2.5.1
-        with:
-          node-version: 16.x
-
-      - name: Install Production Dependencies
-        run: yarn --production
-
-      - name: List Files
-        run: ls -A
-
       - name: SCP Files
         uses: appleboy/scp-action@master
         with:
@@ -117,7 +107,20 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          target: "/home/app/app/api-rentx"
+          target: ${{ env.API_PATH }}
           source: ".,.env"
           rm: true
+          
+      - name: Install Production Dependencies | Run Migrations | Restart API
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ${{ env.API_PATH }}
+            yarn --production
+            node ./node_modules/typeorm/cli --config ormconfig.migrations.json migration:run
+            pm2 restart ${{ env.PM2_SERVICE_NAME }}
       
