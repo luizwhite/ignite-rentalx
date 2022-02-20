@@ -11,6 +11,14 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  API_URL: "http://localhost:3333"
+  FORGOT_MAIL_URL: "http://localhost:3333/password/reset?token="
+  STORAGE_DRIVER: amazonS3
+  MAIL_DRIVER: amazonSES
+  AWS_REGION: sa-east-1
+  AWS_S3_BUCKET_NAME: api-myown-rentx
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -34,6 +42,12 @@ jobs:
         
       - name: Build
         run: yarn build:babel
+
+      - name: Copy Additional Files
+        run: |
+          cp docker-compose.yml dist
+          cp package.json dist
+          ls -A dist
         
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.3.1
@@ -54,6 +68,32 @@ jobs:
         with:
           # Artifact name
           name: artifact
+      
+      - name: Create ENV File
+        run: |
+          touch .env
+          echo "AWS_REGION=${{ env.AWS_REGION }}" >> .env
+          echo "AWS_S3_BUCKET_NAME=${{ env.AWS_S3_BUCKET_NAME }}" >> .env
+          echo "AWS_S3_ACCESS_KEY_ID=${{ secrets.AWS_S3_ACCESS_KEY_ID }}" >> .env
+          echo "AWS_S3_SECRET_ACCESS_KEY=${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}" >> .env
+          echo "AWS_SES_ACCESS_KEY_ID=${{ secrets.AWS_SES_ACCESS_KEY_ID }}" >> .env
+          echo "AWS_SES_SECRET_ACCESS_KEY=${{ secrets.AWS_SES_SECRET_ACCESS_KEY }}" >> .env
+          echo "PSQL_PORT=${{ secrets.PSQL_PORT }}" >> .env
+          echo "PSQL_PASSWORD='${{ secrets.PSQL_PASSWORD }}'" >> .env
+          echo "API_URL=${{ env.API_URL }}" >> .env
+          echo "FORGOT_MAIL_URL=${{ env.FORGOT_MAIL_URL }}" >> .env
+          echo "STORAGE_DRIVER=${{ env.STORAGE_DRIVER }}" >> .env
+          echo "MAIL_DRIVER=${{ env.MAIL_DRIVER }}" >> .env
+
+      - name: Create ORM JSON
+        id: create-json
+        uses: jsdaniell/create-json@master
+        with:
+          name: "ormconfig.json"
+          json: ${{ secrets.PQSL_CONFIG_JSON }}
+
+      - name: List Files
+        run: ls -A
 
       - name: SCP Files
         uses: appleboy/scp-action@master
@@ -62,7 +102,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          target: "/home/app/app/api-rentx/dist"
-          source: "."
+          target: "/home/app/app/api-rentx"
+          source: ".,.env"
           rm: true
       
