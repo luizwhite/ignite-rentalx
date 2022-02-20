@@ -140,4 +140,12 @@ Car rental API made with Node.js and TypeScript during Ignite NodeJS
 - should be able to reset user password with the new password informed.
 - should not be able to use an expired recovery password e-mail link.
 
+
+## 🔗 Useful Configuration Guides Links
+→ [**AWS EC2 - Connect to your Linux instance using SSH**](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html)
+
+→ [**AWS EC2 - Manage user accounts on your Amazon Linux instance**](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-users.html)
+
+→ [**PM2/NGINX - How To Set Up a Node.js Application for Production on Ubuntu 20.04**](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-20-04)
+
 ## 💻 Local Setup

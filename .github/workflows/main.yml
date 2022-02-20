@@ -90,7 +90,14 @@ jobs:
         uses: jsdaniell/create-json@master
         with:
           name: "ormconfig.json"
-          json: ${{ secrets.PQSL_CONFIG_JSON }}
+          json: ${{ secrets.PSQL_CONFIG_JSON }}
+
+      - name: Create ORM MIGRATIONS JSON
+        id: create-migrations-json
+        uses: jsdaniell/create-json@master
+        with:
+          name: "ormconfig.migrations.json"
+          json: ${{ secrets.PSQL_MIGRATIONS_CONFIG_JSON }}
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.5.1

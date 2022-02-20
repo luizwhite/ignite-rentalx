@@ -32,6 +32,7 @@
     "seed:admin": "ts-node-dev -r tsconfig-paths/register src/shared/infra/typeorm/seed/admin.ts",
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli",
+    "typeorm:migration": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli --config ormconfig.migrations.json",
     "build:babel": "babel src --extensions '.ts' --out-dir dist --copy-files",
     "lint": "eslint . -f stylish",
     "lint:to-file": "eslint . -f unix -o",

@@ -8,3 +8,4 @@ tmp/
 uploads/**/*.*
 !/**/.gitkeep
 ormconfig.json
+ormconfig.migrations.json
