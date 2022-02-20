@@ -92,6 +92,14 @@ jobs:
           name: "ormconfig.json"
           json: ${{ secrets.PQSL_CONFIG_JSON }}
 
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.5.1
+        with:
+          node-version: 16.x
+
+      - name: Install Production Dependencies
+        run: yarn --production
+
       - name: List Files
         run: ls -A
 
