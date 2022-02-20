@@ -148,4 +148,8 @@ Car rental API made with Node.js and TypeScript during Ignite NodeJS
 
 → [**PM2/NGINX - How To Set Up a Node.js Application for Production on Ubuntu 20.04**](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-20-04)
 
+→ [**AWS Route 53 - Making Amazon Route 53 the DNS service for an existing domain**](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/MigratingDNS.html)
+
+→ [**Certbot - Automatically use Let’s Encrypt certificates to enable HTTPS**](https://certbot.eff.org/instructions?ws=nginx&os=ubuntufocal)
+
 ## 💻 Local Setup
