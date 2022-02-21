@@ -4,7 +4,7 @@ services:
   database:
     image: postgres
     container_name: database_ignite
-    restart: always
+    # restart: always
     ports:
       - ${PSQL_PORT}:5432
     environment: 
@@ -13,6 +13,14 @@ services:
       - POSTGRES_DB=rentx
     volumes:
       - pgdata:/data/postgres
+
+  redis:
+    image: redis:alpine
+    container_name: rentx_redis
+    ports:
+      - ${REDIS_PORT}:6379
+    command: |
+      --requirepass '${REDIS_PASSWORD}'
 
   app:
     build: .

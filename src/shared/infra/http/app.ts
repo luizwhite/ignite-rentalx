@@ -12,14 +12,16 @@ import { AppError } from '@errors/AppError';
 import { router } from '@routes';
 
 import swaggerFile from '../../../swagger.json';
+import { rateLimiter } from './middlewares/rateLimiter';
 
 const app = express();
+
 app.use(express.json());
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 
+app.use(rateLimiter);
 app.use(cors());
-
 app.use(router);
 
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {

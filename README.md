@@ -152,4 +152,6 @@ Car rental API made with Node.js and TypeScript during Ignite NodeJS
 
 → [**Certbot - Automatically use Let’s Encrypt certificates to enable HTTPS**](https://certbot.eff.org/instructions?ws=nginx&os=ubuntufocal)
 
+→ [**Redis Rate Limiter - Limits number of actions by key and protects from DDoS and brute force attacks at any scale**](https://github.com/animir/node-rate-limiter-flexible/wiki/Redis)
+
 ## 💻 Local Setup
