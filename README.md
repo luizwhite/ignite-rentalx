@@ -8,9 +8,19 @@ Car rental API made with Node.js and TypeScript during Ignite NodeJS
 
 → [**TypeScript**](https://www.typescriptlang.org/)
 
+→ [**TypeORM**](https://typeorm.io/)
+
 → [**Swagger UI**](https://swagger.io/tools/swagger-ui/)
 
 → [**Jest**](https://jestjs.io/docs/getting-started)
+
+→ [**Babel**](https://babeljs.io/)
+
+→ [**Redis Rate Limiter**](https://github.com/animir/node-rate-limiter-flexible/wiki/Redis)
+
+→ [**Sentry**](https://sentry.io)
+
+→ [**GitHub Actions**](https://github.com/features/actions) 
 
 ## 🔨 Features
 → **Car Registration**

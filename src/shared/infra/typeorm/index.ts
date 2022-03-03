@@ -24,7 +24,8 @@ export default async (
       process.env.NODE_ENV !== 'test' ? defaultOptions.database : 'rentx_test',
   } as PostgresConnectionOptions;
 
-  console.log(newOptions);
+  console.log();
+  console.log(newOptions, '\n');
 
   return createConnection(newOptions);
 };

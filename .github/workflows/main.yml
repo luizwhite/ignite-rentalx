@@ -87,6 +87,7 @@ jobs:
           echo "FORGOT_MAIL_URL=${{ env.FORGOT_MAIL_URL }}" >> .env
           echo "STORAGE_DRIVER=${{ env.STORAGE_DRIVER }}" >> .env
           echo "MAIL_DRIVER=${{ env.MAIL_DRIVER }}" >> .env
+          echo "SENTRY_DSN=${{ env.SENTRY_DSN }}" >> .env
 
       - name: Create ORM JSON
         id: create-json
